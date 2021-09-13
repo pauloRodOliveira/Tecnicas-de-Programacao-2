@@ -13,8 +13,7 @@ public class Main {
             byte n = Byte.parseByte(teclado.readLine());
 
             Teste numeroDigitado = new Teste(n);
-            System.out.println(numeroDigitado.setDoubleValueOf(n));
-
+            System.out.println("O dobro de "+ n + " é " + numeroDigitado.setDoubleValueOf(n));
         }catch (Exception e){
         }
     }
