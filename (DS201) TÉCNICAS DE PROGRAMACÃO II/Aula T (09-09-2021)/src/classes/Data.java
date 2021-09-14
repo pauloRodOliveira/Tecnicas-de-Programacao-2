@@ -184,25 +184,29 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
         dia--;
 
         //  abril       junho       setembro   novembro
-        if((mes == 5 || mes == 7 || mes == 10 || mes == 12) && dia < 1){
+        if((mes==5 || mes==7 || mes==10 || mes==12) && dia<1){
             mes--;
-            dia = 30;
-        }else if (mes == 3 && dia < 1){
+            dia=30;
+        }else if (mes==3 && dia<1){
             if(!Data.isBissexto(ano)) {
                 mes--;
-                dia = 29;
+                dia=29;
             }else{
                 mes--;
-                dia = 28;
+                dia=28;
             }
-        }else if(dia < 1){
+        }else if(dia<1){
             mes--;
             dia = 31;
+        }else if(dia ==1 && mes ==1 && ano ==1){
+            dia = 31;
+            mes = 12;
+            ano = 1;
         }
 
-        if(mes > 12){
-            mes = 1;
-            dia = 1;
+        if(mes>12){
+            mes=1;
+            dia=1;
             ano++;
         }
     }
