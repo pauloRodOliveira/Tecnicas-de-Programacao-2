@@ -29,23 +29,21 @@ public class Main
             if (mes > 1 && mes < 12) break;
         } while (mes < 1 || mes > 12);
 
+        boolean diaCerto = false;
+        do {
+            out.println("Digite um dia: ");
+            dia = Byte.parseByte(teclado.readLine());
+
+            if (dia < 1 || dia > 31) out.println("Digite um dia válido!!!");
+
+            if (mes == 2 && dia > 29 && Data.isBissexto(ano)){
+                out.println("Digite um dia válido!!!");
+            }else{
+                diaCerto = true;
+                if (dia > 1 && dia < 31) break;
+            }
+        } while (dia < 1 || dia > 31 || !diaCerto);
         try {
-            boolean diaCerto = false;
-            do {
-                out.println("Digite um dia: ");
-                dia = Byte.parseByte(teclado.readLine());
-
-                if (dia < 1 || dia > 31) out.println("Digite um dia válido!!!");
-
-                if (mes == 2 && dia > 29 && conferirAno.isBissexto(ano) == true){
-                    out.println("Digite um dia válido!!!");
-                }else{
-                    diaCerto = true;
-                    if (dia > 1 && dia < 31) break;
-                }
-            } while (dia < 1 || dia > 31 || diaCerto == false);
-
-
             Data d1 = new Data(dia, mes, ano);
             d1.tranformeSeNoDiaSeguinte();
             out.println(d1);
