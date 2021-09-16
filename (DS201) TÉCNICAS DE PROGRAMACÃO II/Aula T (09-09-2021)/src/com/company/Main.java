@@ -18,8 +18,8 @@ public class Main
             out.println("Digite um ano: ");
             ano = Short.parseShort(teclado.readLine());
             if (ano < -3500 || ano == 0) out.println("Digite um ano válido!!! De preferência, quando o sapiens já aprendeu escrever");
-            if (ano > -3500 || ano == 0)break;
-        } while (ano < -3500);
+            if (ano > -3500 && ano != 0)break;
+        } while (ano < -3500 || ano == 0);
         Data conferirAno = new Data(ano);
 
         do {

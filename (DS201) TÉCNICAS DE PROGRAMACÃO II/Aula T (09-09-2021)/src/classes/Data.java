@@ -171,12 +171,17 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
         }else if(dia > 31){
             mes++;
             dia = 1;
+        }else if(dia ==1 && mes ==1 && ano ==1){
+            dia = 31;
+            mes = 12;
+            ano = 1;
         }
 
-        if(mes > 12){
-            mes = 1;
-            dia = 1;
-            ano++;
+        if(mes>12){
+            mes=1;
+            dia=1;
+            if(ano + 1 == 0) ano = 1;
+            else if(ano + 1 != 0) ano++;
         }
     }
 
@@ -198,16 +203,17 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
         }else if(dia<1){
             mes--;
             dia = 31;
-        }else if(dia ==1 && mes ==1 && ano ==1){
+        }else if(dia==1 && mes==1 && ano==1){
             dia = 31;
             mes = 12;
-            ano = 1;
+            ano = -1;
         }
 
-        if(mes>12){
-            mes=1;
-            dia=1;
-            ano++;
+        if(mes < 1){
+            mes= 12;
+            dia= 31;
+            if(ano - 1 == 0) ano = -1;
+            else if(ano - 1 != 0) ano--;
         }
     }
 
@@ -233,6 +239,7 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
         }
         return "Amanhã será dia " + amh;
     }
+
     public String getDiaAnterior(){
         byte ontem = dia;
         ontem--;
