@@ -157,6 +157,9 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
 
     public void tranformeSeNoDiaSeguinte(){
         dia++;
+        // posso utilizar o método isValida(), pois ele mostra se a Data está errada ou não.
+        // if(Data.isValida(dia+1, this.mes, this.ano)) this.dia++;
+        // else if(Data.isValida((byte)31, this.mes+1, this.ano) this.dia++; this.mes++;
 
         //  abril       junho       setembro   novembro
         if((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30){
