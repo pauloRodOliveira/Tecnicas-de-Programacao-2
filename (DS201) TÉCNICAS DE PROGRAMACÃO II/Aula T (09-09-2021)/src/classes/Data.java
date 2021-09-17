@@ -45,16 +45,6 @@ public class Data<mes> // compulsotiamente (obrigadoriamente) herda de Object: t
         return true;
     }
 
-    public Data(byte dia, byte mes)
-    {
-        this.dia = dia;
-        this.mes = mes;
-    }
-
-    public Data(byte dia){
-        this.dia = dia;
-    }
-
     public Data(short ano){
         this.ano = ano;
     }
