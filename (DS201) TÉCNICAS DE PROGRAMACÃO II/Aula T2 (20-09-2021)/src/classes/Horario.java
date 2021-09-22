@@ -1,5 +1,5 @@
 package classes;
-import static java.lang.Math.*;
+import java.lang.Math;
 
 public class Horario {
     private byte hor;
@@ -56,32 +56,60 @@ public class Horario {
 
     public void adiante (int qtdSeg) throws Exception
     {
-        // alterar this.horas e/ou this.minutos e/ou this.segundos
-        // para o horário avançar a quantidade de segundos fornecida
-        // como parâmetro; lançar exceção, caso essa quantidade seja
-        // negativa ou zero
+        /* alterar this.horas e/ou this.minutos e/ou this.segundos
+           para o horário avançar a quantidade de segundos fornecida
+           como parâmetro; lançar exceção, caso essa quantidade seja
+           negativa ou zero
+        */
         if(qtdSeg <= 0) throw new Exception("Quantidade inválida");
 
-        int seg = this.seg + qtdSeg;
-        int min = this.min;
-        int hor = this.hor;
+        Horario temp = new Horario (this.hor, this.min, this.seg);
+        int Tseg = temp.seg + qtdSeg;
+        int Tmin = temp.min;
+        int Thor = temp.hor;
 
-        if(seg > 59){
-            seg = Math.round(seg%60);
-            min += Math.round(seg/60);
+        if (Tseg > 59){
+            Tmin += Math.round(Tseg/60);
+            Tseg = Tseg%60;
+            if (Tmin > 59){
+                Thor += Math.round(Tmin/60);
+                Tmin = Tmin%60;
+                if(Thor > 24){
+                    Thor = Thor%24;
+                }
+                temp.hor = (byte)Thor;
+            }
+            temp.min = (byte)Tmin;
+        }
+        temp.seg = (byte)Tseg;
 
-            if(min > 59){
-                min = Math.round(min%60);
-                hor += Math.round(min/60);
-                if(hor > 24){
-                    hor = Math.round(hor/24);
-                }else this.min = (byte)min; this.seg = (byte) seg; this.hor = (byte) hor;
-
-            }else this.min = (byte)min; this.seg = (byte) seg;
-
-        }else this.seg = (byte)seg;
+        this.seg = temp.seg;
+        this.min = temp.min;
+        this.hor = temp.hor;
     }
 
+    public void atrase (int qtdSeg) throws Exception
+    {
+        /* alterar this.horas e/ou this.minutos e/ou this.segundos
+         para o horário retroceder a quantidade de segundos fornecida
+         como parâmetro; lançar exceção, caso essa quantidade seja
+         negativa ou zero
+         */
+        if(qtdSeg <= 0) throw new Exception("Quantidade inválida");
+
+        Horario temp = new Horario (this.hor, this.min, this.seg);
+        int Tseg = temp.seg - qtdSeg;
+        int Tmin = temp.min;
+        int Thor = temp.hor;
+
+        if(Tseg < 0){
+            
+        }else temp.seg = (byte) Tseg;
+
+        this.seg = temp.seg;
+        this.min = temp.min;
+        this.hor = temp.hor;
+    }
     @Override
     public String toString(){
         return (this.hor<10?"0":"") + this.hor +":"+

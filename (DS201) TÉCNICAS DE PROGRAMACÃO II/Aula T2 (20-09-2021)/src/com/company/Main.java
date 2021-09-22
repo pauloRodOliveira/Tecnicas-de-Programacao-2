@@ -77,10 +77,10 @@ public class Main
         // precisa ser sobrescrito, ou seja, @Override
         Tempo.setTudo((byte)22,(byte)30,(byte)00);
         out.println("Novo tudo: "+Tempo.toString());
-        int adiante = 120;
-        Tempo.adiante(adiante);
-        out.println(adiante+" adiante: "+Tempo.toString());
-
+        Tempo.adiante(1800);
+        out.println("Adiante: "+Tempo.toString());
+        Tempo.atrase(1);
+        out.println("Atrase: "+Tempo.toString());
         // perguntar o que é ;;
     }
 }
