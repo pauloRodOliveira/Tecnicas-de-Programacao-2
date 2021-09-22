@@ -121,7 +121,7 @@ public class Data
         this.ano=ano;
     }
 
-    // há validaçoes duplicadas; pense em como melhorar
+    // há validaçoes duplicadas; pense em como melhorar ()
     public String  getDiaAnterior () throws Exception {
         // resposta mais longa
         /*

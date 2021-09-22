@@ -5,6 +5,7 @@ package com.company;
 import java.io.*;
 import classes.*;
 import static java.lang.System.*;
+import static java.lang.Math.*;
 
 public class Main
 {
@@ -61,6 +62,25 @@ public class Main
         }*/
 
         // para Horario
-        Horario tempo = new Horario((byte) 30, (byte) 24, (byte) 24);
+        Horario Tempo = new Horario((byte) 20, (byte) 24, (byte) 24);
+
+        out.println("Hora: "+Tempo.getHora());
+        out.println("Minuto: "+Tempo.getMin());
+        out.println("Segundo: "+Tempo.getSeg());
+        Tempo.setHora((byte)19);
+        out.println("Nova hora: "+Tempo.getHora());
+        Tempo.setMin((byte) 50);
+        out.println("Novo minuto: "+Tempo.getMin());
+        Tempo.setSeg((byte) 20);
+        out.println("Novo segundo: "+Tempo.getSeg());
+        //novo tudo precisa chamar o setTudo, porém para mostrar todos os atributos precisamos usar o ToString(), cujo método
+        // precisa ser sobrescrito, ou seja, @Override
+        Tempo.setTudo((byte)22,(byte)30,(byte)00);
+        out.println("Novo tudo: "+Tempo.toString());
+        int adiante = 120;
+        Tempo.adiante(adiante);
+        out.println(adiante+" adiante: "+Tempo.toString());
+
+        // perguntar o que é ;;
     }
 }
