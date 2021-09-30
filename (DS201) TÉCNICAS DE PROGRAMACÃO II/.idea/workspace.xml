@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="27d5d940-8691-4bc6-bd4c-bfac94802035" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Aula T (09-09-2021)/out/production/Aula T (09-09-2021)/classes/Data.class" beforeDir="false" />
+    <list default="true" id="2ae3f7d9-8034-4814-9438-26f415136f3a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/(DS201) TÉCNICAS DE PROGRAMACÃO II.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,14 +13,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="IgnoredFileRootStore">
-    <option name="generatedRoots">
-      <set>
-        <option value="E:\Paulo\Paulo COTUCA\Aulas COTUCA\2º SEMESTRE\Tecnicas-de-Programacao-2\(DS201) TÉCNICAS DE PROGRAMACÃO II\.idea" />
-      </set>
-    </option>
-  </component>
-  <component name="ProjectId" id="1yHcW2dhxwbDcU4Q0tKxMmthUOe" />
+  <component name="ProjectId" id="1ypwVtx2zXivr8FPq0DArhKU2DV" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -55,22 +49,22 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="27d5d940-8691-4bc6-bd4c-bfac94802035" name="Default Changelist" comment="" />
-      <created>1631911982063</created>
+      <changelist id="2ae3f7d9-8034-4814-9438-26f415136f3a" name="Default Changelist" comment="" />
+      <created>1632961864259</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1631911982063</updated>
+      <updated>1632961864259</updated>
     </task>
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="579" y="171" key="FileChooserDialogImpl" timestamp="1631912246542">
+    <state x="579" y="171" key="FileChooserDialogImpl" timestamp="1632962123908">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="579" y="171" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1631912246542" />
-    <state x="182" y="50" key="new project wizard" timestamp="1631912250302">
+    <state x="579" y="171" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1632962123908" />
+    <state x="182" y="50" key="new project wizard" timestamp="1632962132145">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="182" y="50" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1631912250302" />
+    <state x="182" y="50" key="new project wizard/0.0.1600.860@0.0.1600.860" timestamp="1632962132145" />
   </component>
 </project>
