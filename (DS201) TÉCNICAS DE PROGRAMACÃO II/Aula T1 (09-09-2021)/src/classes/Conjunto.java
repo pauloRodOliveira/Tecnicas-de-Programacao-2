@@ -97,8 +97,8 @@ public class Conjunto <X>
         for(int i = posicao; i<this.qtd-1; i++)
             this.elem[i] = this.elem[i+1];
 
-        this.qtd--;
         this.elem[this.qtd] = null;
+        this.qtd--;
     }
 
     public Conjunto (Conjunto<X> modelo) throws Exception // construtor de cópia (construtor com um parâmetro, cujo tipo é a própria classe)
@@ -109,6 +109,7 @@ public class Conjunto <X>
 
     }
 
+    // Fazer todos os métodos obrigatórios
     @Override
     public String toString ()
     {
