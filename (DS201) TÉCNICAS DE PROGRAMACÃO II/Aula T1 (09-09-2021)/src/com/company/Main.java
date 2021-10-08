@@ -4,17 +4,18 @@ atividade autonoma dia 09-09-2021
 package com.company;
 import java.io.*;
 import classes.Data;
+import classes.Conjunto;
 import static java.lang.System.*;
 
 public class Main
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         byte dia;
         byte mes;
         short ano;
         BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
 
-        do {
+        /*do {
             out.println("Digite um ano: ");
             ano = Short.parseShort(teclado.readLine());
             if (ano < -3500 || ano == 0) out.println("Digite um ano válido!!! De preferência, quando o sapiens já aprendeu escrever");
@@ -56,7 +57,15 @@ public class Main
 
         } catch (Exception e) {
             out.println(e);
-        }
+        }*/
 
+        Conjunto<String> c1 = new Conjunto<String>();
+        c1.inclua("Paulo");
+        c1.inclua("Julia");
+        c1.inclua("Lucia");
+        c1.inclua("Cris");
+        out.println(c1);
+        c1.remova("Cris");
+        out.println(c1);
     }
 }
