@@ -67,5 +67,16 @@ public class Main
         out.println(c1);
         c1.remova("Cris");
         out.println(c1);
+
+        Conjunto<String> c2 = new Conjunto<String>();
+        c2.inclua("Paulo");
+        c2.inclua("Julia");
+        c2.inclua("Lucia");
+        c2.inclua("Cris");
+        out.println(c1);
+        c2.remova("Cris");
+        out.println(c2);
+
+        out.println(c1.equals(c2));
     }
 }

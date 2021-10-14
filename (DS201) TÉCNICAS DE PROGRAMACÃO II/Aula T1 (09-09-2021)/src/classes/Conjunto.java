@@ -4,6 +4,7 @@ public class Conjunto <X>
 {
     private Object[] elem; // private X[] elem;
     private int qtd=0;
+    private int capacidadeInicial;
 
     public Conjunto (int capInicial) throws Exception
     {
@@ -12,6 +13,7 @@ public class Conjunto <X>
 
         //this.elem = new X      [capInicial];
         this.elem = new Object [capInicial];
+        this.capacidadeInicial = capInicial;
     }
 
     public Conjunto () // construtor padrão (construtor sem parâmetros)
@@ -99,14 +101,8 @@ public class Conjunto <X>
 
         this.elem[this.qtd] = null;
         this.qtd--;
-    }
 
-    public Conjunto (Conjunto<X> modelo) throws Exception // construtor de cópia (construtor com um parâmetro, cujo tipo é a própria classe)
-    {
-        if (modelo==null)
-            throw new Exception ("Modelo ausente");
-
-
+        //if (this.elem.length>this.capacidadeInicial && this.qtd<=(int)(0.25*this.elem.length))
     }
 
     // Fazer todos os métodos obrigatórios
@@ -125,4 +121,54 @@ public class Conjunto <X>
 
         return ret;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (obj.getClass()!=Conjunto.class) return false;
+
+        Conjunto<X> conj = (Conjunto<X>) obj;
+
+        if(this.qtd != conj.qtd) return false;
+        if(this.capacidadeInicial != conj.capacidadeInicial) return false;
+
+        for (int i=0; i<this.qtd; i++){
+            Boolean achou = (Boolean)this.ondeEsta((X)conj.elem[i])[0];
+
+
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode(){
+        int ret = 1;
+
+        ret = 2*ret + new Integer(this.capacidadeInicial).hashCode();
+        ret = 2*ret + new Integer(this.qtd).hashCode();
+
+        for(int i=0; i<this.qtd; i++)
+            ret = 2*ret + this.elem[i].hashCode();
+
+        if(ret<0)
+            ret =- ret;
+
+        return ret;
+    }
+
+    public Conjunto(Conjunto<X> modelo) throws Exception{
+        if(modelo == null)
+            throw new Exception("Modelo ausente");
+
+        this.capacidadeInicial = modelo.capacidadeInicial;
+        this.qtd               = modelo.qtd;
+
+        this.elem = new Object[modelo.elem.length];
+
+        for(int i=0; i<this.qtd; i++)
+            this.elem[i] = modelo.elem[i];
+    }
+
 }
