@@ -71,7 +71,7 @@ public class Conjunto <X> implements Cloneable
             this.elem[i+1] = this.elem[i];
 
         if (x instanceof Cloneable)
-            this.elem[posicao] = x.clone();
+            this.elem[posicao] = (X)x.clone();
         else
             this.elem[posicao] = x;
 
