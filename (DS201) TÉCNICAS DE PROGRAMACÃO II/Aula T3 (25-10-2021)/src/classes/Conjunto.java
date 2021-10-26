@@ -1,6 +1,5 @@
 package classes;
 
-
 public class Conjunto <X>
 {
     private Object[] elem; // private X[] elem;
@@ -71,8 +70,11 @@ public class Conjunto <X>
         for (int i=this.qtd-1; i>=posicao; i--)
             this.elem[i+1] = this.elem[i];
 
-        if (x instanceof Cloneable)
-            this.elem[posicao] = x.clone();
+        if (x instanceof Cloneable) {
+            Clonador<X> clonador = new Clonador<X>();
+            this.elem[this.qtd] = clonador.clone(x);
+            //this.elem[posicao] = x.clone();
+        }
         else
             this.elem[posicao] = x;
 
@@ -95,8 +97,10 @@ public class Conjunto <X>
         if (i<0 || i>=this.qtd)
             throw new Exception ("Elemento invalido");
 
-        if (this.elem[i] instanceof Cloneable)
-            return (X)this.elem[i].clone();
+        if (this.elem[i] instanceof Cloneable) {
+            Clonador<X> clonador = new Clonador<X>();
+            return clonador.clone((X) this.elem[i]);
+        }
         else
             return (X)this.elem[i];
     }
@@ -217,32 +221,52 @@ public class Conjunto <X>
     }
 
     // Atividade autonoma
+
     // retornar um conjunto com todos os elementos do this e mais
     // todos os elementos do conj, sem repetição de elementos
     public Conjunto<X> uniao (Conjunto<X> conj) throws Exception
     {
         if (conj == null) throw  new Exception("Conjunto ausente");
-        Conjunto<X> ret = new Conjunto<X>(this.qtd+conj.qtd);
+        Conjunto<X> ret = new Conjunto<X>(this.qtd + conj.qtd);
 
-        int pos     = 0;       //posição que irá indicar a posição
-        boolean ver = true;
+        // primeiro, vamos incluir todos os elem de this em ret
+        for(int aux = 0; aux < this.qtd; aux++){
+           ret.inclua((X)this.elem[aux]);
+        }
 
-        Object[] onde = this.ondeEsta((X)(conj.elem[i]));
-        boolean achou = (Boolean)onde[0];
+        // depois vamos verificar se o elemento que vamos adicionar de conj existe em ret
+        // caso exista, somente adicionar 1 no aux,
+        // caso não, incluir este elemento.
+        for(int aux = 0; aux < conj.qtd; aux++){
+            if(!ret.tem((X) conj.elem[aux])){
+                ret.inclua((X)conj.elem[aux]);
+            }
+        }
 
-        if(!achou)
-
-
-        return (Conjunto<X>) ret;
+        return ret;
     }
+
 
     // retornar um conjunto com os elementos comuns ao this e ao conj
     // retornar um conjunto com os elementos comuns ao this e ao conj
     public Conjunto<X> inteseccao (Conjunto<X> conj) throws Exception
     {
-        //...
+        if (conj == null) throw  new Exception("Conjunto ausente");
+        Conjunto<X> ret;
+        if (conj.qtd < this.qtd)
+            ret = new Conjunto<X>(conj.qtd);
+        else
+            ret = new Conjunto<X>(this.qtd);
+
+        for(int aux = 0; aux < this.qtd; aux++)
+            if(conj.tem((X)this.elem[aux])){
+               ret.inclua((X)this.elem[aux]);
+            }
+
+        return ret;
     }
 
+    /*
     // retornar um conjunto com todos os elementos do this que
     // não são também elementos do conj
     public Conjunto<X> menos (Conjunto<X> conj) throws Exception
@@ -255,18 +279,7 @@ public class Conjunto <X>
     // retornar false, caso contrário
     public boolean contem (Conjunto<X> conj) throws Exception
     {
-        if (conj == null) throw  new Exception("Conjunto ausente");
 
-        boolean ver = true;
-
-        for (int i=0; i<conj.qtd; i++){
-            Object[] onde  = this.ondeEsta((X)(conj.elem[i]));
-            boolean achou = (Boolean)onde[0];
-
-            if(!achou) ver = false;
-        }
-
-        return ver;
     }
 
     // retornar true se o conj contém o this, ou seja se todos
@@ -276,4 +289,5 @@ public class Conjunto <X>
     {
         //...
     }
+    */
 }
