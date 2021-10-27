@@ -266,20 +266,45 @@ public class Conjunto <X>
         return ret;
     }
 
-    /*
+
     // retornar um conjunto com todos os elementos do this que
     // não são também elementos do conj
     public Conjunto<X> menos (Conjunto<X> conj) throws Exception
     {
-        //...
+        if (conj == null) throw  new Exception("Conjunto ausente");
+        Conjunto<X> ret = new Conjunto<X>(this.qtd + conj.qtd);
+
+        for(int aux = 0; aux < this.qtd; aux++){
+            ret.inclua((X)this.elem[aux]);
+        }
+
+        for(int aux = 0; aux < this.qtd; aux++){
+            if(this.inteseccao(conj).tem((X) elem[aux])){
+                ret.remova((X) elem[aux]);
+            }
+        }
+
+        if(this.contem(conj)) ret = null;
+
+        return ret;
     }
+
 
     // retornar true se o this contem o conj, ou seja se todos
     // os elementos do conj forem também elementos do this;
     // retornar false, caso contrário
     public boolean contem (Conjunto<X> conj) throws Exception
     {
+        if (conj == null) throw  new Exception("Conjunto ausente");
+        boolean ver = true;
 
+        for(int aux = 0; aux < conj.qtd; aux++)
+            if (!this.tem((X) conj.elem[aux])){
+                ver = false;
+            }
+
+
+        return ver;
     }
 
     // retornar true se o conj contém o this, ou seja se todos
@@ -287,7 +312,12 @@ public class Conjunto <X>
     // retornar false, caso contrário
     public boolean estaContido (Conjunto<X> conj) throws Exception
     {
-        //...
+        if (conj == null) throw  new Exception("Conjunto ausente");
+        boolean ver = true;
+
+        if(!conj.contem(this)) ver = false;
+
+        return ver;
     }
-    */
+
 }

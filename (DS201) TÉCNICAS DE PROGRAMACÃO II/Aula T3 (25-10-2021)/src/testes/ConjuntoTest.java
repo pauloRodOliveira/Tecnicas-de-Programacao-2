@@ -44,5 +44,51 @@ public class ConjuntoTest {
         }catch (Exception erro){
             err.println("Erro em testar método interseccao: " + erro);
         }
+
+        try{
+            out.println("\nteste do método menos");
+            Conjunto<String> A = new Conjunto<String>(10);
+            Conjunto<String> B = new Conjunto<String>(10);
+
+            A.inclua("a");
+            A.inclua("b");
+            A.inclua("c");
+            A.inclua("d");
+            A.inclua("e");
+            B.inclua("a");
+            B.inclua("b");
+            B.inclua("c");
+            B.inclua("d");
+            B.inclua("e");
+            out.println("A: "  + A  + "\n"+
+                    "B: "  + B  + "\n");
+            out.println("A - B: " + A.menos(B));
+        }catch (Exception erro){
+            err.println("Erro em testar método menos: " + erro);
+        }
+
+        try{
+            out.println("\nteste do método estaContido");
+            Conjunto<String> A = new Conjunto<String>(10);
+            Conjunto<String> B = new Conjunto<String>(10);
+
+            A.inclua("a");
+            A.inclua("b");
+            A.inclua("c");
+            A.inclua("d");
+            A.inclua("e");
+            A.inclua("g");
+            B.inclua("a");
+            B.inclua("b");
+            B.inclua("c");
+            B.inclua("d");
+            B.inclua("e");
+            B.inclua("f");
+            out.println("A: "  + A  + "\n"+
+                    "B: "  + B  + "\n");
+            out.println("A ⊂ B: " + A.estaContido(B));
+        }catch (Exception erro){
+            err.println("Erro em testar método estaContido: " + erro);
+        }
     }
 }
