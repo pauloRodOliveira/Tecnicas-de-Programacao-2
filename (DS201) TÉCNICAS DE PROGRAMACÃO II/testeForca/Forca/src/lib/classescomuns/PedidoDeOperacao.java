@@ -6,11 +6,16 @@ public class PedidoDeOperacao  extends Comunicado
     // guardar a tentativa.
 
     private char operacao;   // [C]hute ou [R]esposta
-    private String tenta;    // palavra ou letra?
+    private String tenta = "";    // palavra ou letra?
 
     public PedidoDeOperacao(char operacao, String tenta){
         this.operacao = operacao;
         this.tenta = tenta;
+    }
+
+    public PedidoDeOperacao(char operacao, char tenta){
+        this.operacao = operacao;
+        this.tenta += tenta;
     }
 
     public char getOperacao(){

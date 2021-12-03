@@ -1,0 +1,16 @@
+MODIFICAÇÕES:
+- Cliente: | agora ele vai esperar os outros jogadores entrarem
+           | vai receber os EstadoDeJogo atual
+           | jogar
+
+- Resultado -> EstadoDeJogo: | vai receber as classes que demonstram o estado do jogo (Tracinhos e ControladorDeLetrasJaDigitadas)
+
+- SupevisoraDeConexao: | gerencia o jogo (resumidamente)
+		       | instacia um transmissor e receptor para este parceiro
+		       | insere o jogador dentro do grupo 
+		       | decide a vez do jogador (quando for a vez dele, enviar EstadoDeJogoAtual)
+		       | espera o jogador retornar um resultado
+		       | insere a sua tentativa em jogo
+                       | caso seja uma Resposta e ele erre, tirá-lo do jogo
+		       | caso seja um Chute, adicionar a letra em ControladorDeLetrasJaDigitadas e liberar a letra em Tracinhos
+                       | passar para o próximo jogador o EstadoDeJogo atual

@@ -4,6 +4,20 @@ import lib.classescomuns.*;
 import lib.classesclientes.*;
 
 public class Cliente {
+
+    // Esperar por outros jogadores
+        // condicional, quando ele receber um comunicado de que todos os jogadores entraram
+        // ele vai receber uma mensagem informando-o disso
+
+        // repetição
+        {
+            // receber estado de jogo atual
+            // se ele receber um comunicado do tipo estado atual, ele vai mostrá-lo
+
+            //jogar 
+            // caso ele receba um comunicado de permição para jogar, ele joga
+        }
+
     
     public static final String HOST_PADRAO  = "localhost";
 	public static final int    PORTA_PADRAO = 3000;
@@ -84,65 +98,79 @@ public class Cliente {
             
         tratadoraDeComunicadoDeDesligamento.start();
 
-        char opcao = ' ';
-        do{
-            //System.out.println("Aguardando a sua vez de jogar ou o grupo de jogadores estar completo...");
+        System.out.println ("Aguardando jogadores entrarem...\n");
+        servidor.receba (new PedidoDeResultado ());
+        Comunicado comunicado = null;
+        do
+        {
+            comunicado = (Comunicado)servidor.espie ();
+        }
+        while (!(comunicado instanceof Permicao));
+        Permicao  permicao = (Permicao)servidor.envie ();
+        System.out.println ("Todos jogadores já entraram, agora aguarde sua vez...\n");
+
+        
+        char opcao=' ';
+        do
+        {
+            //caso ele receba um comunicado permitindo
+            // joga a letra da opçao escolhida 
             servidor.receba (new PedidoDeResultado ());
-            Comunicado comunicado = null;
-            
-            // cliente fica esperando o resultado, quando o servidor mandar o resultado ele da continuidade ao programa
-            /* NOTA: podemos utilizar isso para organizar a vez de cada jogador */
+            comunicado = null;
             do
             {
-                comunicado = (Comunicado)servidor.espie (); 
+                comunicado = (Comunicado)servidor.espie ();
             }
-            while (!(comunicado instanceof Resultado));
-            Resultado resultado = (Resultado)servidor.envie ();
-            System.out.println ("Estado do jogo atual: "+resultado.getResultEstadoDoJogo()+"\n");
+            while (!(comunicado instanceof EstadoDeJogo));
+            EstadoDeJogo  estadoDeJogo = (EstadoDeJogo)servidor.envie ();
+            System.out.println ("Estado de jogo atual: "+ estadoDeJogo.getResultEstadoDoJogo()+"\n");
 
-            // após ter entrado todos jogadores e for a vez de this
-            System.out.println("Escolha entre [C]hutar (tentar uma letra), [R]esposta (tentar uma palavra) ou [S]air.");
-            try{
-                opcao = Character.toUpperCase(Teclado.getUmChar());
-            }catch(Exception erro){
-                System.out.println("Opcao inválida");
-                continue; //não executa mais nada que vier pela frente e volta para o começo do loop
-            }
-
-            if("CRS".indexOf(opcao) == -1){
-                System.out.println("Opcao inválida");
-                continue;
-            }
-
-            if(opcao == 'S') break;
+            System.out.print ("Sua opção: [C]hute (somente uma letra), [R]esposta (palavra inteira) e [S]air. \n");
+            System.out.println("NOTA: caso escolha Resposta e ERRE, você será ELIMINADO!");
 
             try
             {
-                if ("CR".indexOf(opcao)!=-1)
-                {
-                    System.out.print ("Digite sua tentativa: ");
-                    String tenta = "";
+                opcao = Character.toUpperCase(Teclado.getUmChar());
+            }
+            catch (Exception erro)
+            {
+                System.err.println ("Opcao invalida!\n");
+                continue;
+            }
+
+            if ("CRS".indexOf(opcao)==-1)
+            {
+                System.err.println ("Opcao invalida!\n");
+                continue;
+            }
+
+            try
+            {
+                System.out.println("Faça sua tentativa: ");
+                if(opcao == 'C'){
+                    char letra;
                     try
                     {
-                        // fazer o cliente digitar o valor do chute ou tentativa
-                        if(opcao == 'C'){
-                            tenta = Teclado.getUmString();
-                        }else if(opcao == 'R'){
-                            tenta = Teclado.getUmString();
-                        }
-
-                        if(opcao == 'C' && tenta.length() > 1){
-                            System.out.println("Tentativa inválida");
-                            continue;
-                        }
+                        letra = Character.toUpperCase(Teclado.getUmChar());
                     }
                     catch (Exception erro)
                     {
-                        System.err.println ("Tentativa inválida invalido!\n");
+                        System.err.println ("Opcao invalida!\n");
                         continue;
                     }
-
-                    servidor.receba (new PedidoDeOperacao (opcao, tenta));
+                    servidor.receba(new PedidoDeOperacao(opcao, letra));
+                }else{
+                    String resposta;
+                    try
+                    {
+                        resposta = Teclado.getUmString();
+                    }
+                    catch (Exception erro)
+                    {
+                        System.err.println ("Opcao invalida!\n");
+                        continue;
+                    }
+                    servidor.receba(new PedidoDeOperacao(opcao, resposta));
                 }
             }
             catch (Exception erro)
@@ -152,7 +180,8 @@ public class Cliente {
                 System.err.println ("Caso o erro persista, termine o programa");
                 System.err.println ("e volte a tentar mais tarde!\n");
             }
-        }while(opcao != 'S');
+        }
+        while (opcao != 'S');
 
         try
         {
