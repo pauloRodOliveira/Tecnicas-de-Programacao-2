@@ -74,125 +74,104 @@ public class SupervisoraDeConexao extends Thread
 
         try
         {
+            /*
             synchronized (this.usuarios)
             {
-                // array list auxiliar recebe tres jogadores
-                // forma uma array list GRUPO 
-                // limpa auxiliar 
+                ArrayList<Parceiro> grupo = new ArrayList<Parceiro>(3);
+                this.usuarios.trimToSize(); //regula o tamanho do array para o a quantidade de elementos que tiverem dentro dele
                 this.usuarios.add (this.usuario);
-                // quando o array list usuario tiver tres jogadores, ele vai montar um grupo com esses tres
-                /*if(this.usuarios.size() == 3){
-                    for(Parceiro usuario : this.usuarios){
-                        this.grupoUsuarios.add(this.usuario);
+                // vou poder utilizar size pois o .trimToSize() regula o tamanho do ArrayList
+                if(usuarios.size() >= 3){     
+                    for(int aux = 0; aux <= this.usuarios.size(); aux++){
+                        grupo.set(aux, this.usuarios.get(aux));
                     }
-                    this.usuarios.clear(); //limpa usuarios para acolher mais tres e montar outro grupo
-                }*/
+                }
+            }*/
+
+            synchronized (this.usuarios)
+            {
+                this.usuarios.add (this.usuario);
             }
 
+            
+            Palavra palavra = BancoDePalavras.getPalavraSorteada();
+            
+            Tracinhos tracinhos = null;
+            try
+            {
+                tracinhos = new Tracinhos (palavra.getTamanho());
+            }
+            catch (Exception erro)
+            {}
+            
+
+            ControladorDeLetrasJaDigitadas
+                    controladorDeLetrasJaDigitadas =
+                    new ControladorDeLetrasJaDigitadas ();
+
+            ControladorDeErros controladorDeErros = null;
+            try
+            {
+                controladorDeErros = new ControladorDeErros ((int)(palavra.getTamanho()*0.6));
+            }
+            catch (Exception erro)
+            {}
 
             for(;;)
             {
                 Comunicado comunicado = this.usuario.envie ();
 
-                Palavra palavra =
-                    BancoDePalavras.getPalavraSorteada();
-
-                Tracinhos tracinhos = null;
-                try
+                if (comunicado==null)
+                    return;
+                else if (comunicado instanceof PedidoDeOperacao)
                 {
-                    tracinhos = new Tracinhos (palavra.getTamanho());
+					PedidoDeOperacao pedidoDeOperacao = (PedidoDeOperacao)comunicado;
+					
+					switch (pedidoDeOperacao.getOperacao())
+					{
+						case 'C':
+						    this.letra = pedidoDeOperacao.getLetra();
+						    break;
+						    
+						case 'R':
+						    this.palavra = pedidoDeOperacao.getPalav();
+						    break;
+                    }
+
+                    if(controladorDeLetrasJaDigitadas.isJaDigitada(letra)){
+                         throw new Exception("letra já digitada");
+                    }else{
+                        controladorDeLetrasJaDigitadas.registre(letra);
+                    }
+
+                    int qtd = palavra.getQuantidade (letra);
+
+                    if (qtd==0)
+                    {
+                        throw new Exception("A palavra nao tem essa letra!\n");
+                    }
+                    else
+                    {
+                        for (int i=0; i<qtd; i++)
+                        {
+                            int posicao = palavra.getPosicaoDaIezimaOcorrencia (i,letra);
+                            tracinhos.revele (posicao, letra);
+                        }
+                    }
                 }
-                catch (Exception erro)
-                {}
-
-                ControladorDeLetrasJaDigitadas controladorDeLetrasJaDigitadas =
-                    new ControladorDeLetrasJaDigitadas ();
-
-                ControladorDeErros controladorDeErros = null;
-
-                this.estadoJogo = "Palavra...: " + tracinhos + "Digitadas.: " + controladorDeLetrasJaDigitadas + "Erros.....: "+controladorDeErros;
-                do{
-                    if (comunicado==null)
-                        return;
-                    else if (comunicado instanceof PedidoDeOperacao)
-                    {
-                        PedidoDeOperacao pedidoDeOperacao = (PedidoDeOperacao)comunicado;
-                        /*switch (pedidoDeOperacao.getOperacao())
-                        {
-                            case 'C':
-                                String aux = pedidoDeOperacao.getTenta();
-                                this.letra = aux.charAt(0);
-                                break;
-                                
-                            case 'R':
-                                this.palavra = pedidoDeOperacao.getTenta();
-                                break;
-                        }*/
-
-                        while (tracinhos.isAindaComTracinhos() && !controladorDeErros.isAtingidoMaximoDeErros())
-                         {
-                             this.estadoJogo = "Palavra...: " + tracinhos +
-                                               "Digitadas.: " + controladorDeLetrasJaDigitadas +
-                                               "Erros.....: "+controladorDeErros;
-                           // System.out.println ("Palavra...: "+tracinhos);
-                           // System.out.println ("Digitadas.: "+controladorDeLetrasJaDigitadas);
-                           // System.out.println ("Erros.....: "+controladorDeErros);
-
-                            try
-                            {
-                                //System.out.print   ("Qual letra? "); // só vem na vez do cliente
-                                char letra = pedidoDeOperacao.getOperacao(); //cliente
-
-                                if (controladorDeLetrasJaDigitadas.isJaDigitada (letra))
-                                    this.estadoJogo = "letra ja digitada";
-                                else
-                                {
-                                    controladorDeLetrasJaDigitadas.registre (letra);
-
-                                    int qtd = palavra.getQuantidade (letra);
-
-                                    if (qtd==0)
-                                    {
-                                        //System.err.println ("A palavra nao tem essa letra!\n");
-                                        controladorDeErros.registreUmErro ();
-                                    }
-                                    else
-                                    {
-                                        for (int i=0; i<qtd; i++)
-                                        {
-                                            int posicao = palavra.getPosicaoDaIezimaOcorrencia (i,letra);
-                                            tracinhos.revele (posicao, letra);
-                                        }
-                                        //System.out.println ();
-                                    }
-                                }
-                            }
-                            catch (Exception erro)
-                            {
-                                //System.err.println (erro.getMessage());
-                            }
-                        }
-                        try
-                        {
-                            controladorDeErros = new ControladorDeErros ((int)(palavra.getTamanho()*0.6));
-                        }
-                        catch (Exception erro)
-                        {}
-
-                    }
-                    else if (comunicado instanceof PedidoDeResultado)
-                    {
-                        this.usuario.receba (new Resultado (this.estadoJogo));
-                    }
-                    else if (comunicado instanceof PedidoParaSair)
-                    {
+                else if (comunicado instanceof PedidoDeResultado)
+                {
+                    this.usuario.receba (new EstadoDeJogo (tracinhos, controladorDeLetrasJaDigitadas));
+                    //this.usuario.receba (new RespostaDeJogo (tracinhos, resposta));
+                }
+                else if (comunicado instanceof PedidoParaSair)
+                {
                     synchronized (this.usuarios)
                     {
                         this.usuarios.remove (this.usuario);
                     }
                     this.usuario.adeus();
-                    }
-                }while(!(comunicado instanceof PedidoParaSair));
+                }
             }
         }
         catch (Exception erro)

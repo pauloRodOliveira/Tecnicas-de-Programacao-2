@@ -98,7 +98,7 @@ public class Cliente {
             
         tratadoraDeComunicadoDeDesligamento.start();
 
-        System.out.println ("Aguardando jogadores entrarem...\n");
+        /*System.out.println ("Aguardando jogadores entrarem...\n");
         servidor.receba (new PedidoDeResultado ());
         Comunicado comunicado = null;
         do
@@ -107,7 +107,7 @@ public class Cliente {
         }
         while (!(comunicado instanceof Permicao));
         Permicao  permicao = (Permicao)servidor.envie ();
-        System.out.println ("Todos jogadores já entraram, agora aguarde sua vez...\n");
+        System.out.println ("Todos jogadores já entraram, agora aguarde sua vez...\n");*/
 
         
         char opcao=' ';
@@ -116,12 +116,12 @@ public class Cliente {
             //caso ele receba um comunicado permitindo
             // joga a letra da opçao escolhida 
             servidor.receba (new PedidoDeResultado ());
-            comunicado = null;
+            Comunicado estado = null;
             do
             {
-                comunicado = (Comunicado)servidor.espie ();
+                estado = (Comunicado)servidor.espie ();
             }
-            while (!(comunicado instanceof EstadoDeJogo));
+            while (!(estado instanceof EstadoDeJogo));
             EstadoDeJogo  estadoDeJogo = (EstadoDeJogo)servidor.envie ();
             System.out.println ("Estado de jogo atual: "+ estadoDeJogo.getResultEstadoDoJogo()+"\n");
 
@@ -134,6 +134,7 @@ public class Cliente {
             }
             catch (Exception erro)
             {
+                
                 System.err.println ("Opcao invalida!\n");
                 continue;
             }
@@ -143,6 +144,8 @@ public class Cliente {
                 System.err.println ("Opcao invalida!\n");
                 continue;
             }
+
+            if(opcao == 'S') break;
 
             try
             {
@@ -172,6 +175,7 @@ public class Cliente {
                     }
                     servidor.receba(new PedidoDeOperacao(opcao, resposta));
                 }
+
             }
             catch (Exception erro)
             {
