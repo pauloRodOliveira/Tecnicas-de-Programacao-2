@@ -8,10 +8,9 @@ public class SupervisoraDeConexao extends Thread
 {
     private String              palavra;
     private char                  letra;
-    private String           estadoJogo;
+    private Boolean      vitoriaDerrota;
     private Parceiro            usuario;
     private Socket              conexao;
-    private ArrayList<Parceiro> grupoUsuarios;
     private ArrayList<Parceiro> usuarios;
 
     public SupervisoraDeConexao
@@ -112,7 +111,7 @@ public class SupervisoraDeConexao extends Thread
             ControladorDeErros controladorDeErros = null;
             try
             {
-                controladorDeErros = new ControladorDeErros ((int)(palavra.getTamanho()*0.6));
+                controladorDeErros = new ControladorDeErros (1);
             }
             catch (Exception erro)
             {}
@@ -138,24 +137,32 @@ public class SupervisoraDeConexao extends Thread
 						    break;
                     }
 
-                    if(controladorDeLetrasJaDigitadas.isJaDigitada(letra)){
-                         throw new Exception("letra já digitada");
-                    }else{
-                        controladorDeLetrasJaDigitadas.registre(letra);
-                    }
+                    if(pedidoDeOperacao.getOperacao() == 'C'){
+                        if(controladorDeLetrasJaDigitadas.isJaDigitada(letra)){
+                            throw new Exception("letra já digitada");
+                        }else{
+                            controladorDeLetrasJaDigitadas.registre(letra);
+                        }
 
-                    int qtd = palavra.getQuantidade (letra);
+                        int qtd = palavra.getQuantidade (letra);
 
-                    if (qtd==0)
-                    {
-                        throw new Exception("A palavra nao tem essa letra!\n");
-                    }
-                    else
-                    {
-                        for (int i=0; i<qtd; i++)
+                        if (qtd==0)
                         {
-                            int posicao = palavra.getPosicaoDaIezimaOcorrencia (i,letra);
-                            tracinhos.revele (posicao, letra);
+                            throw new Exception("A palavra nao tem essa letra!\n");
+                        }
+                        else
+                        {
+                            for (int i=0; i<qtd; i++)
+                            {
+                                int posicao = palavra.getPosicaoDaIezimaOcorrencia (i,letra);
+                                tracinhos.revele (posicao, letra);
+                            }
+                        }
+                    }else{
+                        if(this.palavra.toUpperCase().equals(palavra.getPalavra())){
+                            this.vitoriaDerrota  = true;
+                        }else{
+                            this.vitoriaDerrota  = false;
                         }
                     }
                 }
@@ -163,6 +170,11 @@ public class SupervisoraDeConexao extends Thread
                 {
                     this.usuario.receba (new EstadoDeJogo (tracinhos, controladorDeLetrasJaDigitadas));
                     //this.usuario.receba (new RespostaDeJogo (tracinhos, resposta));
+                }
+                else if (comunicado instanceof PedidoDeDecisao)
+                {
+                        if(this.vitoriaDerrota){ usuario.receba(new Vitoria());}
+                        else if(!this.vitoriaDerrota){ usuario.receba(new Derrota());}
                 }
                 else if (comunicado instanceof PedidoParaSair)
                 {

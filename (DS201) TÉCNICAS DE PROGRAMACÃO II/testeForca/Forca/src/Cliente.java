@@ -122,7 +122,7 @@ public class Cliente {
                 estado = (Comunicado)servidor.espie ();
             }
             while (!(estado instanceof EstadoDeJogo));
-            EstadoDeJogo  estadoDeJogo = (EstadoDeJogo)servidor.envie ();
+            EstadoDeJogo estadoDeJogo = (EstadoDeJogo)servidor.envie ();
             System.out.println ("Estado de jogo atual: "+ estadoDeJogo.getResultEstadoDoJogo()+"\n");
 
             System.out.print ("Sua opção: [C]hute (somente uma letra), [R]esposta (palavra inteira) e [S]air. \n");
@@ -158,9 +158,10 @@ public class Cliente {
                     }
                     catch (Exception erro)
                     {
-                        System.err.println ("Opcao invalida!\n");
+                        System.err.println ("Opcao inválida, ou letra já digitada!\n");
                         continue;
                     }
+                    
                     servidor.receba(new PedidoDeOperacao(opcao, letra));
                 }else{
                     String resposta;
@@ -174,6 +175,16 @@ public class Cliente {
                         continue;
                     }
                     servidor.receba(new PedidoDeOperacao(opcao, resposta));
+                    System.out.print("Resultado:");
+                    servidor.receba (new PedidoDeDecisao ());
+                    Comunicado decisao = (Comunicado)servidor.espie();
+                    if(decisao instanceof Vitoria){
+                        System.out.println("Você ganhou");
+                    }else if(decisao instanceof Derrota){
+                        System.out.println("Você perdeu");
+                    }
+
+                    opcao = 'S';
                 }
 
             }

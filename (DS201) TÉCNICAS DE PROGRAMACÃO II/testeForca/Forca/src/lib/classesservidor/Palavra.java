@@ -35,6 +35,10 @@ public class Palavra implements Comparable<Palavra>, Serializable
         return quantidade;
     }
 
+    public String getPalavra(){
+        return this.texto.toUpperCase();
+    }
+
     public int getPosicaoDaIezimaOcorrencia (int i, char letra) throws Exception
     {
         // se i==0, retorna a posicao em que ocorre a primeira
