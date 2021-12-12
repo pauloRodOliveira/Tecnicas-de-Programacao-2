@@ -19,7 +19,7 @@ public class EstadoDeJogo extends Comunicado
     }
 
     public Boolean isJaDigitada(char letra){
-        return controladorDeLetrasJaDigitadas.isJaDigitada(letra);
+        return this.controladorDeLetrasJaDigitadas.isJaDigitada(letra);
     }
 
     @Override

@@ -161,7 +161,11 @@ public class Cliente {
                         System.err.println ("Opcao inválida, ou letra já digitada!\n");
                         continue;
                     }
-                    
+
+                    if(estadoDeJogo.isJaDigitada(letra)){
+                        System.out.println("Letra já digitada");
+                    }
+
                     servidor.receba(new PedidoDeOperacao(opcao, letra));
                 }else{
                     String resposta;

@@ -8,6 +8,7 @@ public class SupervisoraDeConexao extends Thread
 {
     private String              palavra;
     private char                  letra;
+    private String             resposta;
     private Boolean      vitoriaDerrota;
     private Parceiro            usuario;
     private Socket              conexao;
@@ -139,7 +140,7 @@ public class SupervisoraDeConexao extends Thread
 
                     if(pedidoDeOperacao.getOperacao() == 'C'){
                         if(controladorDeLetrasJaDigitadas.isJaDigitada(letra)){
-                            throw new Exception("letra já digitada");
+                            resposta = "letra já digitada";
                         }else{
                             controladorDeLetrasJaDigitadas.registre(letra);
                         }
@@ -148,7 +149,7 @@ public class SupervisoraDeConexao extends Thread
 
                         if (qtd==0)
                         {
-                            throw new Exception("A palavra nao tem essa letra!\n");
+                            resposta = ("A palavra nao tem essa letra!\n");
                         }
                         else
                         {
@@ -169,7 +170,10 @@ public class SupervisoraDeConexao extends Thread
                 else if (comunicado instanceof PedidoDeResultado)
                 {
                     this.usuario.receba (new EstadoDeJogo (tracinhos, controladorDeLetrasJaDigitadas));
-                    //this.usuario.receba (new RespostaDeJogo (tracinhos, resposta));
+                }
+                else if (comunicado instanceof PedidoDeResposta)
+                {
+                    this.usuario.receba (new Resposta (resposta));
                 }
                 else if (comunicado instanceof PedidoDeDecisao)
                 {
